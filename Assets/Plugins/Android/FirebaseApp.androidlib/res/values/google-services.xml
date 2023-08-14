@@ -1,0 +1,11 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources xmlns:tools="http://schemas.android.com/tools" tools:keep="@string/firebase_database_url,@string/gcm_defaultSenderId,@string/google_storage_bucket,@string/project_id,@string/google_api_key,@string/google_crash_reporting_api_key,@string/google_app_id,@string/default_web_client_id">
+  <string name="firebase_database_url" translatable="false">https://pomodoro-shell-default-rtdb.europe-west1.firebasedatabase.app</string>
+  <string name="gcm_defaultSenderId" translatable="false">264273909609</string>
+  <string name="google_storage_bucket" translatable="false">pomodoro-shell.appspot.com</string>
+  <string name="project_id" translatable="false">pomodoro-shell</string>
+  <string name="google_api_key" translatable="false">AIzaSyCu3Mx9_lr7wbeQ_aFdkpYB94O3tDF4KDk</string>
+  <string name="google_crash_reporting_api_key" translatable="false">AIzaSyCu3Mx9_lr7wbeQ_aFdkpYB94O3tDF4KDk</string>
+  <string name="google_app_id" translatable="false">1:264273909609:android:ed5a3fcf1306f6781c8ff8</string>
+  <string name="default_web_client_id" translatable="false">264273909609-31adt0nslq6usgh8ta9u05bhp06k444h.apps.googleusercontent.com</string>
+</resources>

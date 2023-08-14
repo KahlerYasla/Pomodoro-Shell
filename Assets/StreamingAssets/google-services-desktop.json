@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "264273909609",
+    "firebase_url": "https://pomodoro-shell-default-rtdb.europe-west1.firebasedatabase.app",
+    "project_id": "pomodoro-shell",
+    "storage_bucket": "pomodoro-shell.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:264273909609:android:ed5a3fcf1306f6781c8ff8",
+        "android_client_info": {
+          "package_name": "com.vafaill.pomodoroshell"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "264273909609-31adt0nslq6usgh8ta9u05bhp06k444h.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCu3Mx9_lr7wbeQ_aFdkpYB94O3tDF4KDk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "264273909609-31adt0nslq6usgh8ta9u05bhp06k444h.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "264273909609-3saj96t52ln3i86amqsjcm91btcf33pn.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.vafaill.pomodoroshell"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
