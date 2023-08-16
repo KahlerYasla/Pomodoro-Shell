@@ -107,9 +107,11 @@ public class SlidePanels : MonoBehaviour
 
             Debug.Log("Credits: " + profileData.Credits);
 
-            // update the profile panel
-            profilePanel.transform.Find("Credits").GetChild(1).GetComponent<TMPro.TextMeshProUGUI>().text = profileData.Credits.ToString();
+            // update the credits
+            profilePanel.transform.Find("Credits").GetChild(2).GetComponent<TMPro.TextMeshProUGUI>().text = profileData.Credits.ToString();
 
+            // update the harvestable credits
+            profilePanel.transform.Find("HarvestableCredits").GetChild(1).GetComponent<TMPro.TextMeshProUGUI>().text = LocalSavedDataUtility.HarvestableCredits.ToString();
         }
     }
     #endregion Start the panels -------------------------------------------------------------------------------------------------------------------

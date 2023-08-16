@@ -1,7 +1,9 @@
 # Today
+
+# Stack
+- items photos
 - firebase connection
 - profile panel
-# Stack
 - load the customizable items from firebase
 - admob connection
 - market panel
