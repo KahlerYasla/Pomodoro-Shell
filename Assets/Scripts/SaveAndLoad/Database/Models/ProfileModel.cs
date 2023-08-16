@@ -13,9 +13,11 @@ public class ProfileModel
     public string UnlockedItems;
     public int Credits;
 
-    public ProfileModel(string ID, int Credits)
+    public ProfileModel(string ID, int Credits, string ActiveItems, string UnlockedItems)
     {
         this.ID = ID;
         this.Credits = Credits;
+        this.ActiveItems = ActiveItems;
+        this.UnlockedItems = UnlockedItems;
     }
 }

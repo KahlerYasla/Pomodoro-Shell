@@ -14,11 +14,13 @@ public class SlidePanels : MonoBehaviour
 
     public void Start()
     {
-        StartThePanels();
+        SetThePanels();
     }
 
     public void SlideInPanel(int panelIndex)
     {
+        SetThePanels();
+
         StartCoroutine(Slide(panelIndex, false));
 
         // print("sliding in panelIndex: " + panelIndex);
@@ -42,6 +44,7 @@ public class SlidePanels : MonoBehaviour
         StartCoroutine(EnableOpenButton(panelIndex));
     }
 
+    // Enable the pressable property of pannel's open button in the navbar after the panel is fully slided out.
     private IEnumerator EnableOpenButton(int panelIndex)
     {
         yield return new WaitForSeconds(_slideDuration);
@@ -87,14 +90,12 @@ public class SlidePanels : MonoBehaviour
     }
 
     #region Set the panels **********************************************************************************************************************
-    #region Start the panels -------------------------------------------------------------------------------------------------------------------
-
-    private void StartThePanels()
+    private void SetThePanels()
     {
-        StartProfilePanel();
+        UpdateProfilePanel();
     }
 
-    private async void StartProfilePanel()
+    private async void UpdateProfilePanel()
     {
         // update the profile panel
         GameObject profilePanel = panelTransform[2].gameObject;
@@ -114,18 +115,5 @@ public class SlidePanels : MonoBehaviour
             profilePanel.transform.Find("HarvestableCredits").GetChild(1).GetComponent<TMPro.TextMeshProUGUI>().text = LocalSavedDataUtility.HarvestableCredits.ToString();
         }
     }
-    #endregion Start the panels -------------------------------------------------------------------------------------------------------------------
-    #region Update the panels -------------------------------------------------------------------------------------------------------------------
-    private void UpdateProfilePanel()
-    {
-        // update the profile panel
-        GameObject profilePanel = panelTransform[2].gameObject;
-        if (profilePanel != null)
-        {
-            // update the profile panel
-            // profilePanel.transform.Find("Credits").GetChild(1).GetComponent<TMPro.TextMeshProUGUI>().text =  from database
-        }
-    }
-    #endregion Update the panels -------------------------------------------------------------------------------------------------------------------
     #endregion Set the panels **********************************************************************************************************************
 }

@@ -62,6 +62,23 @@ public class StartStopTheTimer : MonoBehaviour
 
                     timer.text = timerInt >= 10 ? timerInt.ToString() + ":00" : "0" + timerInt.ToString() + ":00";
 
+                    #region Harvestable Credits ----------------------------------------------------
+                    // Get how many minutes per pomodoro
+                    int minutesPerPomodoro = LocalSavedDataUtility.PomodoroDuration;
+
+                    // Check if the "HarvestableCredits" key exists in PlayerPrefs
+                    if (LocalSavedDataUtility.HarvestableCredits > 0)
+                    {
+                        // Key exists, so increase the value by 1
+                        LocalSavedDataUtility.HarvestableCredits += minutesPerPomodoro;
+                    }
+                    else
+                    {
+                        // Key does not exist, set it to 1
+                        LocalSavedDataUtility.HarvestableCredits = 1;
+                    }
+                    #endregion Harvestable Credits ----------------------------------------------------
+
                     // show break dialog
                     BreakDialog.Activate();
 
