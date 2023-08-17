@@ -1,5 +1,6 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class SlidePanels : MonoBehaviour
 {
@@ -93,6 +94,7 @@ public class SlidePanels : MonoBehaviour
     private void SetThePanels()
     {
         UpdateProfilePanel();
+        UpdateMarketPanel();
     }
 
     private async void UpdateProfilePanel()
@@ -115,5 +117,64 @@ public class SlidePanels : MonoBehaviour
             profilePanel.transform.Find("HarvestableCredits").GetChild(1).GetComponent<TMPro.TextMeshProUGUI>().text = LocalSavedDataUtility.HarvestableCredits.ToString();
         }
     }
+
+    public GameObject MarketContentGrid, InventoryContentGrid;
+    private string[] UnlockedItems;
+    private async void UpdateMarketPanel()
+    {
+        // clear the market content grid and inventory content grid
+        foreach (Transform child in MarketContentGrid.transform)
+        {
+            Destroy(child.gameObject);
+        }
+        foreach (Transform child in InventoryContentGrid.transform)
+        {
+            Destroy(child.gameObject);
+        }
+
+        // get the market data
+        DatabaseManager databaseManager = new();
+
+        ProfileModel profileData = await databaseManager.GetProfileModelAsync();
+
+        // get the unlocked items
+        UnlockedItems = profileData.UnlockedItems.Split(',');
+
+        int UnlockedItemSearchIndex = 0;
+
+
+        for (int i = 0; i < NoteBook.CountOfAllItems(); i++)
+        {
+            int ThemeIndex = i / NoteBook.CountOfItemsPerTheme();
+            int ItemIndex = i % NoteBook.CountOfItemsPerTheme();
+
+            // create an button and set the image GameObject and load its sprite from the Resources folder and set its parent to relevant content grid
+            GameObject itemImage = new GameObject("ItemImage");
+            itemImage.AddComponent<UnityEngine.UI.Button>().onClick.AddListener(() => { print("Item clicked"); });
+            itemImage.AddComponent<UnityEngine.UI.Image>().sprite = Resources.Load<Sprite>("Sprites/CustomizableObjects/" + ThemeIndex + "/" + Dictionaries.IndexToItemName[ItemIndex]);
+
+            // if the item is unlocked put it in the inventory content grid
+            if (UnlockedItemSearchIndex < UnlockedItems.Length && UnlockedItems[UnlockedItemSearchIndex] == i.ToString())
+            {
+                print("UnlockedItems[UnlockedItemSearchIndex]: " + UnlockedItems[UnlockedItemSearchIndex]);
+
+                itemImage.transform.SetParent(InventoryContentGrid.transform, false);
+
+                UnlockedItemSearchIndex++;
+            }
+            else    // if the item is not unlocked put it in the market content grid
+            {
+                itemImage.transform.SetParent(MarketContentGrid.transform, false);
+            }
+
+        }
+
+        // set the Content Grids' height
+        MarketContentGrid.GetComponent<RectTransform>().sizeDelta = new Vector2(0, 225 * (MarketContentGrid.transform.childCount / 5));
+        InventoryContentGrid.GetComponent<RectTransform>().sizeDelta = new Vector2(0, 225 * (InventoryContentGrid.transform.childCount / 5));
+
+    }
+
     #endregion Set the panels **********************************************************************************************************************
+
 }

@@ -4,12 +4,10 @@ public class ProfileModel
 {
     public string ID;
 
-    // active items are stored as a string of numbers separated by commas, rows are separated by semicolons and represent the theme of the item
-    // 1 = active, 0 = inactive
+    // each active item is seperated by a comma and saved by its ID
     public string ActiveItems;
 
-    // unlocked items are stored as a string of numbers separated by commas, rows are separated by semicolons and represent the theme of the item
-    // 1 = unlocked, 0 = locked
+    // each unlocked item is seperated by a comma and saved by its ID
     public string UnlockedItems;
     public int Credits;
 

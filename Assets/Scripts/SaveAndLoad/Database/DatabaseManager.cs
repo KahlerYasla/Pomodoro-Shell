@@ -49,7 +49,7 @@ public class DatabaseManager : MonoBehaviour
     // create new profile
     private ProfileModel CreateProfileModel()
     {
-        ProfileModel profile = new ProfileModel(_ID, 0, "", "");
+        ProfileModel profile = new ProfileModel(_ID, 0, "0,1,2,3,4,5,6,7,8,9", "0,1,2,3,4,5,6,7,8,9");
         string json = JsonUtility.ToJson(profile);
         _dbReference.Child("profiles").Child(_ID).SetRawJsonValueAsync(json);
         Debug.Log("Profile does not exist, created new profile: " + profile.ID);

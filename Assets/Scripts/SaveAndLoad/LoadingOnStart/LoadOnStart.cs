@@ -19,20 +19,30 @@ public class LoadOnStart : MonoBehaviour
         int timerInt = LocalSavedDataUtility.PomodoroDuration;
         timer.text = timerInt >= 10 ? timerInt.ToString() + ":00" : "0" + timerInt.ToString() + ":00";
 
-        // debug log the timer data
-        // Debug.Log(GetTimerData());
-
-        // debug log the indexToItemNameDictionary
-        print(Dictionaries.IndexToItemName[0]);
-
+        InstantiateCustomizationObjectsAsync();
     }
 
-    private string GetTimerData()
+    private async void InstantiateCustomizationObjectsAsync()
     {
-        string timerData = string.Format("Loading Data\n---------------\nDaily Pomodoro Goal: {0}\nBreak Duration: {1}\nPomodoro Duration: {2}",
-            LocalSavedDataUtility.DailyPomodoroGoal,
-            LocalSavedDataUtility.BreakDuration,
-            LocalSavedDataUtility.PomodoroDuration);
-        return timerData;
+        // get the profile data
+        DatabaseManager databaseManager = new();
+
+        ProfileModel profileData = await databaseManager.GetProfileModelAsync();
+
+        // get the unlocked items
+        string[] ActiveItems = profileData.ActiveItems.Split(',');
+
+        // instantiate the active items
+        for (int i = 0; i < ActiveItems.Length; i++)
+        {
+            int ThemeIndex = int.Parse(ActiveItems[i]) / NoteBook.CountOfItemsPerTheme();
+            int ItemIndex = int.Parse(ActiveItems[i]) % NoteBook.CountOfItemsPerTheme();
+
+            // instantiate the item
+            GameObject item = Instantiate(Resources.Load("Prefabs/CustomizableObjects/" + ThemeIndex.ToString() + "/"
+            + Dictionaries.IndexToItemName[ItemIndex]) as GameObject, GameObject.Find("GameObjects").transform.Find("CustomizableObjects"));
+
+        }
     }
+
 }
