@@ -3,14 +3,25 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+// singleton class
 public class BreakDialog : MonoBehaviour
 {
+    public static BreakDialog Instance { get; private set; }
+
     public TMPro.TextMeshProUGUI timer;
-    public static GameObject breakDialogPanel;
+    public GameObject breakDialogPanel;
     public Button startStopButton;
 
     private Coroutine timerCoroutine;
     private bool isTimerRunning = false;
+
+    void Awake()
+    {
+        if (Instance == null)
+        {
+            Instance = this;
+        }
+    }
 
     // Start is called before the first frame update
     void Start()
@@ -18,16 +29,9 @@ public class BreakDialog : MonoBehaviour
         // timer.text value is in minutes. Change it to format of mm:ss
         int timerInt = LocalSavedDataUtility.BreakDuration;
         timer.text = timerInt >= 10 ? timerInt.ToString() + ":00" : "0" + timerInt.ToString() + ":00";
-
-        breakDialogPanel = GameObject.Find("BreakDialog");
-
-        // set position of break dialog panel to the center of the screen
-        breakDialogPanel.GetComponent<RectTransform>().anchoredPosition = Vector3.zero;
-
-        breakDialogPanel.SetActive(false);
     }
 
-    public static void Activate()
+    public void Activate()
     {
         breakDialogPanel.SetActive(true);
     }

@@ -4,7 +4,7 @@
 QualitySettings:
   m_ObjectHideFlags: 0
   serializedVersion: 5
-  m_CurrentQuality: 1
+  m_CurrentQuality: 3
   m_QualitySettings:
   - serializedVersion: 3
     name: Very Low
@@ -57,6 +57,7 @@ QualitySettings:
     excludedTargetPlatforms:
     - Android
     - iPhone
+    - Standalone
   - serializedVersion: 3
     name: Low
     pixelLightCount: 0
@@ -107,6 +108,9 @@ QualitySettings:
     terrainMaxTrees: 50
     excludedTargetPlatforms:
     - iPhone
+    - Android
+    - Server
+    - Standalone
   - serializedVersion: 3
     name: Medium
     pixelLightCount: 1
@@ -158,13 +162,15 @@ QualitySettings:
     excludedTargetPlatforms:
     - Android
     - iPhone
+    - Server
+    - Standalone
   - serializedVersion: 3
     name: High
     pixelLightCount: 2
-    shadows: 2
+    shadows: 1
     shadowResolution: 1
     shadowProjection: 1
-    shadowCascades: 2
+    shadowCascades: 1
     shadowDistance: 40
     shadowNearPlaneOffset: 3
     shadowCascade2Split: 0.33333334
@@ -207,8 +213,7 @@ QualitySettings:
     terrainFadeLength: 5
     terrainMaxTrees: 50
     excludedTargetPlatforms:
-    - Android
-    - iPhone
+    - Server
   - serializedVersion: 3
     name: Very High
     pixelLightCount: 3
@@ -259,6 +264,9 @@ QualitySettings:
     terrainMaxTrees: 50
     excludedTargetPlatforms:
     - Android
+    - Server
+    - iPhone
+    - Standalone
   - serializedVersion: 3
     name: Ultra
     pixelLightCount: 4
@@ -311,6 +319,7 @@ QualitySettings:
     - Server
     - Android
     - iPhone
+    - Standalone
   m_TextureMipmapLimitGroupNames: []
   m_PerPlatformDefaultQuality:
     Android: 3
@@ -319,9 +328,9 @@ QualitySettings:
     Nintendo Switch: 5
     PS4: 5
     PSP2: 2
-    Server: 3
+    Server: 0
     Stadia: 5
-    Standalone: 5
+    Standalone: 3
     WebGL: 3
     Windows Store Apps: 5
     XboxOne: 5

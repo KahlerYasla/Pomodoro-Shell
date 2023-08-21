@@ -15,18 +15,8 @@ public class ApplyChanges : MonoBehaviour
         LocalSavedDataUtility.PomodoroDuration = int.Parse(pomodoroDuration.text);
         LocalSavedDataUtility.BreakDuration = int.Parse(breakDuration.text);
 
-        FillTheDots.dotIndex = 0;
-
         // reload the scene
-        ReloadScene();
+        SceneReloader.ReloadScene();
     }
 
-    private void ReloadScene()
-    {
-        // Get the current active scene
-        Scene currentScene = SceneManager.GetActiveScene();
-
-        // Reload the current scene
-        SceneManager.LoadScene(currentScene.buildIndex);
-    }
 }

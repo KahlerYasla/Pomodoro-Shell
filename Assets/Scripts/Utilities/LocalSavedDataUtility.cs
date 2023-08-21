@@ -49,6 +49,10 @@ public static class LocalSavedDataUtility
         get => PlayerPrefs.GetInt(PlayerPrefKeys.HarvestableCreditsKey, defaultValue: 0);
         set
         {
+            if (value > 25)
+            {
+                value = 25;
+            }
             PlayerPrefs.SetInt(PlayerPrefKeys.HarvestableCreditsKey, value);
             PlayerPrefs.Save();
         }

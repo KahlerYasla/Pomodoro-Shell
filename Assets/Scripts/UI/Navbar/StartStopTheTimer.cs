@@ -80,7 +80,7 @@ public class StartStopTheTimer : MonoBehaviour
                     #endregion Harvestable Credits ----------------------------------------------------
 
                     // show break dialog
-                    BreakDialog.Activate();
+                    BreakDialog.Instance.Activate();
 
                     break;
                 }

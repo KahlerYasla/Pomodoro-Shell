@@ -24,7 +24,6 @@ public class SlidePanels : MonoBehaviour
 
         StartCoroutine(Slide(panelIndex, false));
 
-        // print("sliding in panelIndex: " + panelIndex);
         // slide out other panels
         for (int i = 0; i < panelTransform.Length; i++)
         {
@@ -34,6 +33,13 @@ public class SlidePanels : MonoBehaviour
                 StartCoroutine(Slide(i, true));
             }
         }
+
+        if (panelIndex == 2)
+        {
+            // load the ads
+            WatchAndHarvestCredits.Instance.LoadRewardedAd();
+        }
+
     }
 
     public void SlideOutPanel(int panelIndex)
@@ -104,21 +110,20 @@ public class SlidePanels : MonoBehaviour
         if (profilePanel != null)
         {
             // get the profile data
-            DatabaseManager databaseManager = new();
+            DatabaseManager databaseManager = DatabaseManager.Instance;
 
             ProfileModel profileData = await databaseManager.GetProfileModelAsync();
-
-            Debug.Log("Credits: " + profileData.Credits);
 
             // update the credits
             profilePanel.transform.Find("Credits").GetChild(2).GetComponent<TMPro.TextMeshProUGUI>().text = profileData.Credits.ToString();
 
             // update the harvestable credits
-            profilePanel.transform.Find("HarvestableCredits").GetChild(1).GetComponent<TMPro.TextMeshProUGUI>().text = LocalSavedDataUtility.HarvestableCredits.ToString();
+            profilePanel.transform.Find("HarvestableCredits").GetChild(1).GetComponent<TMPro.TextMeshProUGUI>().text = LocalSavedDataUtility.HarvestableCredits.ToString() + " / 25";
         }
     }
 
     public GameObject MarketContentGrid, InventoryContentGrid;
+    public TMPro.TextMeshProUGUI CreditsText;
     private string[] UnlockedItems;
     private async void UpdateMarketPanel()
     {
@@ -133,9 +138,11 @@ public class SlidePanels : MonoBehaviour
         }
 
         // get the market data
-        DatabaseManager databaseManager = new();
+        DatabaseManager databaseManager = DatabaseManager.Instance;
 
         ProfileModel profileData = await databaseManager.GetProfileModelAsync();
+
+        CreditsText.text = profileData.Credits.ToString();
 
         // get the unlocked items
         UnlockedItems = profileData.UnlockedItems.Split(',');
@@ -149,15 +156,14 @@ public class SlidePanels : MonoBehaviour
             int ItemIndex = i % NoteBook.CountOfItemsPerTheme();
 
             // create an button and set the image GameObject and load its sprite from the Resources folder and set its parent to relevant content grid
-            GameObject itemImage = new GameObject("ItemImage");
-            itemImage.AddComponent<UnityEngine.UI.Button>().onClick.AddListener(() => { print("Item clicked"); });
+            string ItemCode = ThemeIndex.ToString() + "," + ItemIndex.ToString();
+            GameObject itemImage = new GameObject(ItemCode);
+            itemImage.AddComponent<UnityEngine.UI.Button>().onClick.AddListener(() => { _ = MarketPanelController.Instance.PurchaseItemAsync(ItemCode); });
             itemImage.AddComponent<UnityEngine.UI.Image>().sprite = Resources.Load<Sprite>("Sprites/CustomizableObjects/" + ThemeIndex + "/" + Dictionaries.IndexToItemName[ItemIndex]);
 
             // if the item is unlocked put it in the inventory content grid
             if (UnlockedItemSearchIndex < UnlockedItems.Length && UnlockedItems[UnlockedItemSearchIndex] == i.ToString())
             {
-                print("UnlockedItems[UnlockedItemSearchIndex]: " + UnlockedItems[UnlockedItemSearchIndex]);
-
                 itemImage.transform.SetParent(InventoryContentGrid.transform, false);
 
                 UnlockedItemSearchIndex++;
@@ -170,8 +176,8 @@ public class SlidePanels : MonoBehaviour
         }
 
         // set the Content Grids' height
-        MarketContentGrid.GetComponent<RectTransform>().sizeDelta = new Vector2(0, 225 * (MarketContentGrid.transform.childCount / 5));
-        InventoryContentGrid.GetComponent<RectTransform>().sizeDelta = new Vector2(0, 225 * (InventoryContentGrid.transform.childCount / 5));
+        MarketContentGrid.GetComponent<RectTransform>().sizeDelta = new Vector2(0, 225 * (MarketContentGrid.transform.childCount / 5) + 1);
+        InventoryContentGrid.GetComponent<RectTransform>().sizeDelta = new Vector2(0, 225 * (InventoryContentGrid.transform.childCount / 5) + 1);
 
     }
 

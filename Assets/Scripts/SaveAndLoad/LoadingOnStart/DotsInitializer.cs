@@ -60,8 +60,6 @@ public class DotsInitializer : MonoBehaviour
             dot.name = "Dot" + i.ToString();
 
         }
-
-        // print("Initializing dots...");
     }
 
     private void FillCompletedDots()

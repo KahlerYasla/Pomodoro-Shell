@@ -3,41 +3,55 @@ using System.Collections.Generic;
 using UnityEngine;
 using GoogleMobileAds.Api;
 
+// singleton class
 public class WatchAndHarvestCredits : MonoBehaviour
 {
+    public static WatchAndHarvestCredits Instance { get; private set; }
     public TMPro.TextMeshProUGUI creditsText, harvestableCreditsText;
 
-#if UNITY_ANDROID
-    private string _adUnitId = "ca-app-pub-9145901369649865/3215180761";
-#elif UNITY_IPHONE
-    private string _adUnitId = "ca-app-pub-9145901369649865/3215180761";
-#else
-    private string _adUnitId = "ca-app-pub-9145901369649865/3215180761";
-#endif
+    private void Awake()
+    {
+        Instance = this;
+    }
 
     public void Start()
     {
         // Initialize the Google Mobile Ads SDK.
-        MobileAds.Initialize(initStatus => { });
+        MobileAds.Initialize((InitializationStatus initStatus) =>
+        {
+            // This callback is called once the MobileAds SDK is initialized.
+        });
     }
 
     public void WatchAndHarvestCreditsButtonClicked()
     {
-        LoadRewardedAd();
+        LoadRewardedAd(true);
     }
 
     #region AdMob Rewarded Ad -------------------------------------------------------------------------------------------------------
+
+#if UNITY_ANDROID
+    private readonly string _adUnitId = "ca-app-pub-9145901369649865/3215180761";
+#elif UNITY_IPHONE
+            private readonly string _adUnitId = "ca-app-pub-9145901369649865/3215180761";
+#else
+            private readonly string _adUnitId = "unused";
+#endif
 
     private RewardedAd _rewardedAd;
 
     public void ShowRewardedAd()
     {
+        Debug.LogWarning("ShowRewardedAd() called.");
+
         if (_rewardedAd != null && _rewardedAd.CanShowAd())
         {
+            Debug.LogWarning("ShowRewardedAd() called. _rewardedAd != null && _rewardedAd.CanShowAd()");
             _rewardedAd.Show(async (Reward reward) =>
             {
+                Debug.LogWarning("ShowRewardedAd() called. _rewardedAd.Show(async (Reward reward) =>");
                 // Reward the user by increasing credits by harvestable credits and save to the database
-                DatabaseManager databaseManager = new DatabaseManager();
+                DatabaseManager databaseManager = DatabaseManager.Instance;
 
                 ProfileModel profile = await databaseManager.GetProfileModelAsync();
 
@@ -52,14 +66,22 @@ public class WatchAndHarvestCredits : MonoBehaviour
                 harvestableCreditsText.text = LocalSavedDataUtility.HarvestableCredits.ToString();
             });
         }
+        else if (_rewardedAd == null)
+        {
+            Debug.LogWarning("ShowRewardedAd() called. _rewardedAd == null");
+        }
+        else if (!_rewardedAd.CanShowAd())
+        {
+            Debug.LogWarning("ShowRewardedAd() called. !_rewardedAd.CanShowAd()");
+        }
     }
 
     /// <summary>
     /// Loads the rewarded ad.
     /// </summary>
-    public void LoadRewardedAd()
+    public void LoadRewardedAd(bool showAdInstantly = false)
     {
-        // Clean up the old ad before loading a new one.
+        // // Clean up the old ad before loading a new one.
         if (_rewardedAd != null)
         {
             _rewardedAd.Destroy();
@@ -69,8 +91,7 @@ public class WatchAndHarvestCredits : MonoBehaviour
         Debug.Log("Loading the rewarded ad.");
 
         // create our request used to load the ad.
-        var adRequest = new AdRequest();
-        adRequest.Keywords.Add("unity-admob-sample");
+        AdRequest adRequest = new();
 
         // send the request to load the ad.
         RewardedAd.Load(_adUnitId, adRequest,
@@ -80,19 +101,18 @@ public class WatchAndHarvestCredits : MonoBehaviour
                 if (error != null || ad == null)
                 {
                     Debug.LogError("Rewarded ad failed to load an ad " +
-                                   "with error : " + error);
+                                "with error : " + error);
                     return;
                 }
 
                 Debug.Log("Rewarded ad loaded with response : "
-                          + ad.GetResponseInfo());
+                        + ad.GetResponseInfo());
 
                 _rewardedAd = ad;
 
-
+                if (showAdInstantly)
+                    ShowRewardedAd();
             });
-
-        ShowRewardedAd();
     }
     #endregion AdMob Rewarded Ad -------------------------------------------------------------------------------------------------------
 }

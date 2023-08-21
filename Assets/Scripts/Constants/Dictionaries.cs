@@ -14,5 +14,6 @@ public static class Dictionaries
         { 7, "Floor"},
         { 8, "LeftWallSlot"},
         { 9, "RightWallSlot"},
+        { 10, "Wall"},
     };
 }

@@ -4,14 +4,22 @@ using UnityEngine;
 using Firebase.Database;
 using Firebase;
 using System.Threading.Tasks;
+using System.Linq;
 
+// singleton class
 public class DatabaseManager : MonoBehaviour
 {
+    public static DatabaseManager Instance { get; private set; }
+
     private string _ID;
     private DatabaseReference _dbReference;
     public TMPro.TMP_Text HarvestableCreditsText;
 
-    // Start is called before the first frame update
+    private void Awake()
+    {
+        Instance = this;
+    }
+
     void Start()
     {
         _ID = SystemInfo.deviceUniqueIdentifier;
@@ -33,9 +41,6 @@ public class DatabaseManager : MonoBehaviour
         {
             // profile exists
             profile = JsonUtility.FromJson<ProfileModel>(snapshot.GetRawJsonValue());
-
-            Debug.Log("Profile exists, retrieved profile: " + profile.ID);
-            Debug.Log("Credits: " + profile.Credits);
         }
         else
         {
@@ -49,7 +54,11 @@ public class DatabaseManager : MonoBehaviour
     // create new profile
     private ProfileModel CreateProfileModel()
     {
-        ProfileModel profile = new ProfileModel(_ID, 0, "0,1,2,3,4,5,6,7,8,9", "0,1,2,3,4,5,6,7,8,9");
+        // creating a string of all default items separated by commas
+        string items = string.Join(",", Enumerable.Range(0, NoteBook.CountOfItemsPerTheme()).ToArray());
+
+        // creating a new profile model and uploading it to the database
+        ProfileModel profile = new ProfileModel(_ID, 30, items, items);
         string json = JsonUtility.ToJson(profile);
         _dbReference.Child("profiles").Child(_ID).SetRawJsonValueAsync(json);
         Debug.Log("Profile does not exist, created new profile: " + profile.ID);
@@ -61,6 +70,9 @@ public class DatabaseManager : MonoBehaviour
     public void UpdateDatabase(ProfileModel profile)
     {
         string json = JsonUtility.ToJson(profile);
+        Debug.Log("Updating profile: " + json);
+
+
         _dbReference.Child("profiles").Child(_ID).SetRawJsonValueAsync(json);
         Debug.Log("Updated profile: " + profile.ID);
     }

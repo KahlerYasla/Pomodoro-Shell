@@ -15,9 +15,10 @@ public class LoadOnStart : MonoBehaviour
         breakDuration.text = LocalSavedDataUtility.BreakDuration.ToString();
         pomodoroDuration.text = LocalSavedDataUtility.PomodoroDuration.ToString();
 
-        // timer.text value is in minutes. Change it to format of mm:ss
-        int timerInt = LocalSavedDataUtility.PomodoroDuration;
-        timer.text = timerInt >= 10 ? timerInt.ToString() + ":00" : "0" + timerInt.ToString() + ":00";
+        print(SceneReloader.SavedTimerText);
+
+        string timerInt = SceneReloader.SavedTimerText;
+        timer.text = timerInt.ToString();
 
         InstantiateCustomizationObjectsAsync();
     }
@@ -25,7 +26,7 @@ public class LoadOnStart : MonoBehaviour
     private async void InstantiateCustomizationObjectsAsync()
     {
         // get the profile data
-        DatabaseManager databaseManager = new();
+        DatabaseManager databaseManager = DatabaseManager.Instance;
 
         ProfileModel profileData = await databaseManager.GetProfileModelAsync();
 
