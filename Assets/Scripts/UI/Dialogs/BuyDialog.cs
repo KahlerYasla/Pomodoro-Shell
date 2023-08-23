@@ -58,7 +58,7 @@ public class BuyDialog : MonoBehaviour
             // add the item to the inventory
             string[] unlockedItems = profileData.UnlockedItems.Split(',');
             unlockedItems = unlockedItems.Append((_themeIndex * NoteBook.CountOfItemsPerTheme() + _itemIndex).ToString()).ToArray();
-            print(string.Join(",", unlockedItems));
+            Debug.Log(string.Join(",", unlockedItems));
 
             // sort ascending the unlocked items
             unlockedItems = unlockedItems.OrderBy(x => int.Parse(x)).ToArray();

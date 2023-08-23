@@ -15,8 +15,6 @@ public class LoadOnStart : MonoBehaviour
         breakDuration.text = LocalSavedDataUtility.BreakDuration.ToString();
         pomodoroDuration.text = LocalSavedDataUtility.PomodoroDuration.ToString();
 
-        print(SceneReloader.SavedTimerText);
-
         string timerInt = SceneReloader.SavedTimerText;
         timer.text = timerInt.ToString();
 

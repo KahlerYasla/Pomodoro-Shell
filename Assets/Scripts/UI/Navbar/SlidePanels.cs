@@ -27,7 +27,6 @@ public class SlidePanels : MonoBehaviour
         // slide out other panels
         for (int i = 0; i < panelTransform.Length; i++)
         {
-            // print("sliding out panelIndex: " + i);
             if (i != panelIndex)
             {
                 StartCoroutine(Slide(i, true));
@@ -176,8 +175,8 @@ public class SlidePanels : MonoBehaviour
         }
 
         // set the Content Grids' height
-        MarketContentGrid.GetComponent<RectTransform>().sizeDelta = new Vector2(0, 225 * (MarketContentGrid.transform.childCount / 5) + 1);
-        InventoryContentGrid.GetComponent<RectTransform>().sizeDelta = new Vector2(0, 225 * (InventoryContentGrid.transform.childCount / 5) + 1);
+        MarketContentGrid.GetComponent<RectTransform>().sizeDelta = new Vector2(0, 225 * Mathf.CeilToInt((float)MarketContentGrid.transform.childCount / 5));
+        InventoryContentGrid.GetComponent<RectTransform>().sizeDelta = new Vector2(0, 225 * Mathf.CeilToInt((float)InventoryContentGrid.transform.childCount / 5));
 
     }
 

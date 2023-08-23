@@ -58,9 +58,10 @@ public class DatabaseManager : MonoBehaviour
         string items = string.Join(",", Enumerable.Range(0, NoteBook.CountOfItemsPerTheme()).ToArray());
 
         // creating a new profile model and uploading it to the database
-        ProfileModel profile = new ProfileModel(_ID, 30, items, items);
-        string json = JsonUtility.ToJson(profile);
-        _dbReference.Child("profiles").Child(_ID).SetRawJsonValueAsync(json);
+        ProfileModel profile = new(_ID, 30, items, items);
+
+        UpdateDatabase(profile);
+
         Debug.Log("Profile does not exist, created new profile: " + profile.ID);
 
         return profile;

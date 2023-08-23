@@ -37,9 +37,6 @@ public class MarketPanelController : MonoBehaviour
             string[] currentItems = profileData.ActiveItems.Split(',');
             currentItems[ItemIndex] = itemCode.ToString();
 
-            // sort ascending the current items
-            currentItems = currentItems.OrderBy(x => int.Parse(x)).ToArray();
-
             profileData.ActiveItems = string.Join(",", currentItems);
 
             databaseManager.UpdateDatabase(profileData);
