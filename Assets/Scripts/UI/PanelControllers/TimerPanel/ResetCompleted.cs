@@ -13,15 +13,6 @@ public class ResetCompleted : MonoBehaviour
         FillTheDots.dotIndex = 0;
 
         // reload the scene
-        ReloadScene();
-    }
-
-    private void ReloadScene()
-    {
-        // Get the current active scene
-        Scene currentScene = SceneManager.GetActiveScene();
-
-        // Reload the current scene
-        SceneManager.LoadScene(currentScene.buildIndex);
+        SceneReloader.ReloadScene(resetTimer: true);
     }
 }

@@ -42,7 +42,7 @@ public class MarketPanelController : MonoBehaviour
             databaseManager.UpdateDatabase(profileData);
 
 
-            SceneReloader.ReloadScene();
+            SceneReloader.ReloadScene(resetTimer: false);
         }
         else    // open the buy dialog
             BuyDialog.Instance.OpenBuyDialog(ThemeIndex, ItemIndex);

@@ -12,11 +12,17 @@ public static class SceneReloader
       "0" + LocalSavedDataUtility.PomodoroDuration.ToString() + ":00";
 
 
-    public static void ReloadScene()
+    public static void ReloadScene(bool resetTimer = true)
     {
         TimerText = GameObject.Find("Time").GetComponent<TMPro.TMP_Text>();
 
-        SavedTimerText = TimerText.text;
+        if (!resetTimer)
+            SavedTimerText = TimerText.text;
+
+        else
+            SavedTimerText = LocalSavedDataUtility.PomodoroDuration >= 10 ?
+        LocalSavedDataUtility.PomodoroDuration.ToString() + ":00" :
+            "0" + LocalSavedDataUtility.PomodoroDuration.ToString() + ":00";
 
         FillTheDots.dotIndex = 0;
 

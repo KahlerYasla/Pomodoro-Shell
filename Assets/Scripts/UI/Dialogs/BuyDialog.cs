@@ -71,7 +71,7 @@ public class BuyDialog : MonoBehaviour
             CloseBuyDialog();
 
             // reload the scene
-            SceneReloader.ReloadScene();
+            SceneReloader.ReloadScene(resetTimer: false);
         }
         else
         {

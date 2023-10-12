@@ -25,7 +25,7 @@ public class WatchAndHarvestCredits : MonoBehaviour
 
     public void WatchAndHarvestCreditsButtonClicked()
     {
-        LoadRewardedAd(true);
+        ShowRewardedAd();
     }
 
     #region AdMob Rewarded Ad -------------------------------------------------------------------------------------------------------
@@ -35,7 +35,7 @@ public class WatchAndHarvestCredits : MonoBehaviour
 #elif UNITY_IPHONE
             private readonly string _adUnitId = "ca-app-pub-9145901369649865/3215180761";
 #else
-            private readonly string _adUnitId = "unused";
+    private readonly string _adUnitId = "unused";
 #endif
 
     private RewardedAd _rewardedAd;
@@ -74,6 +74,8 @@ public class WatchAndHarvestCredits : MonoBehaviour
         {
             Debug.LogWarning("ShowRewardedAd() called. !_rewardedAd.CanShowAd()");
         }
+
+        LoadRewardedAd();
     }
 
     /// <summary>

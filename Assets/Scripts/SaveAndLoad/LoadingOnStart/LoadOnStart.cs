@@ -19,6 +19,9 @@ public class LoadOnStart : MonoBehaviour
         timer.text = timerInt.ToString();
 
         InstantiateCustomizationObjectsAsync();
+
+        // load the rewarded ad
+        WatchAndHarvestCredits.Instance.LoadRewardedAd();
     }
 
     private async void InstantiateCustomizationObjectsAsync()

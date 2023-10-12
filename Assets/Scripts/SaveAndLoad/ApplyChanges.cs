@@ -16,7 +16,7 @@ public class ApplyChanges : MonoBehaviour
         LocalSavedDataUtility.BreakDuration = int.Parse(breakDuration.text);
 
         // reload the scene
-        SceneReloader.ReloadScene();
+        SceneReloader.ReloadScene(resetTimer: true);
     }
 
 }
